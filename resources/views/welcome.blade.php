@@ -1,4 +1,4 @@
 @extends('layoute.app')
-@extends('auth.sidenav-header')
-@extends('auth.main')
-@extends('auth.fixed-plugin')
+@extends('partials.sidenav-header')
+@extends('partials.main')
+@extends('partials.fixed-plugin')
