@@ -26,11 +26,10 @@
 <!-- Nepcha Analytics (nepcha.com) -->
 <!-- Nepcha is a easy-to-use web analytics. No cookies and fully compliant with GDPR, CCPA and PECR. -->
 <script defer data-site="YOUR_DOMAIN_HERE" src="https://api.nepcha.com/js/nepcha-analytics.js"></script>
-<script src="{{ asset('js/material-dashboard.min.js') }}"></script>
 </head>
 <body class="g-sidenav-show bg-gray-100">
     @yield('sidenav-header')
-    @yield('main')
+    @yield('content')
     @yield('fixed-plugin')
 
     <script>
@@ -42,11 +41,13 @@
       Scrollbar.init(document.querySelector('#sidenav-scrollbar'), options);
     }
   </script>
-
   <!-- Github buttons -->
   <script async defer src="https://buttons.github.io/buttons.js"></script>
-
-
   <!-- Control Center for Material Dashboard: parallax effects, scripts for the example pages etc -->
+  <script src="{{ asset('js/core/popper.min.js') }}"></script>
+  <script src="{{ asset('js/core/bootstrap.min.js') }}"></script>
+  <script src="{{ asset('js/plugins/perfect-scrollbar.min.js') }}"></script>
+  <script src="{{ asset('js/plugins/smooth-scrollbar.min.js') }}"></script>
+  <script src="{{ asset('js/material-dashboard.min.js') }}?v=3.1.0"></script>
 </body>
 </html>
