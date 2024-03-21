@@ -2,63 +2,74 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 
 class PageController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
+    public function home()
+    {
+        return view('welcome');
+    }
     public function dashboard()
     {
         return view('auth.dashboard');
     }
+    public function signInTpl()
+    {
+        return view('auth.signIn');
+    }
 
-    /**
-     * Show the form for creating a new resource.
-     */
+    public function signInPost(Request $request)
+    {
+        $user = User::all();
+
+        $credential = $request->validate([
+            'email' => 'required|email',
+            'password' => 'required'
+        ]);
+ 
+        if(Auth::attempt($credential)) {
+
+            return redirect()->intended(route('home'));
+        }
+        return redirect(route('sign-in'))->with('error', 'Failed logged in!');
+    }
+    public function logOut(){
+        
+        Auth::logout();
+        return redirect(route('login'));
+    }
     public function create()
     {
-        //
+        return view('auth.signUpForm');
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function signUp(Request $request)
     {
-        //
-    }
+        $request->validate([
+            'name' => 'required|min:3',
+            'email' => 'required|'
+        ],
+        );
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        //
-    }
+        $data = $request->all();
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        //
-    }
+        $data = User::create([
+            'name' => $data['name'],
+            'email' => $data['email'],
+            'password' => Hash::make($data['password']),
+        ]);
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
-    {
-        //
-    }
+        return redirect()->route('sign-in')->with('succes', 'User saved.');
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
-    {
-        //
     }
 }
