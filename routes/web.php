@@ -16,13 +16,13 @@ use Illuminate\Support\Facades\Route;
 */
 
 
-Route::controller(PageController::class)->group(function(){
+Route::controller(PageController::class)->group(function()
+{
     Route::get('dashboard', 'dashboard')->name('dashboard');
     Route::get('sign-in', 'signInTpl')->name('sign-in');
-    Route::post('/login', 'signinPost')->name('login.post');
+    Route::post('login', 'signInPost')->name('login.post');
     Route::get('/', 'home')->name('home');
     Route::get('sign-up', 'create')->name('sign-up');
-    Route::post('/store', 'signUp')->middleware(NameToUppercaseMiddleware::class);
-
+    Route::post('/store', 'signUp')->name('store')->middleware(NameToUppercaseMiddleware::class);
 
 });
