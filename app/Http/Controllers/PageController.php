@@ -28,7 +28,6 @@ class PageController extends Controller
     public function signInPost(Request $request)
     {
         $user = User::all();
-
         $credential = $request->validate([
             'email' => 'required|email',
             'password' => 'required'
@@ -39,6 +38,7 @@ class PageController extends Controller
             return redirect()->intended(route('home'));
         }
         return redirect(route('sign-in'))->with('error', 'Failed logged in!');
+        
     }
     public function logOut(){
         
