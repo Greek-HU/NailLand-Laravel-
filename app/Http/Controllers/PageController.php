@@ -14,6 +14,7 @@ class PageController extends Controller
      */
     public function home()
     {
+        
         return view('welcome');
     }
     public function dashboard()
@@ -43,7 +44,7 @@ class PageController extends Controller
     public function logOut(){
         
         Auth::logout();
-        return redirect(route('login'));
+        return redirect(route('sign-in'));
     }
     public function create()
     {
