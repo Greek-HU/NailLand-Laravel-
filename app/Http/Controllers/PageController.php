@@ -54,7 +54,7 @@ class PageController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function signUp(Request $request)
+    public function signUp(Request $request,)
     {
         $request->validate([
             'name' => 'required|min:3',
