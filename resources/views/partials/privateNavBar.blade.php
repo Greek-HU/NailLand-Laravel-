@@ -7,7 +7,7 @@
         <div class="nav_links">
 
             <a href="/" class="fst_pg">Kezdőlap</a>
-            <a href="service" class="services">Szolgáltatások</a>
+            <a href="editService" class="services">Szolgáltatások</a>
             <a href="gallery" class="gall_on">Galéria</a>
             <a href="upload">Képfeltöltés</a>
             <div class="d-flex justify-content-end">
