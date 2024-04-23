@@ -8,8 +8,7 @@
 
             <a href="/" class="fst_pg">Kezdőlap</a>
             <a href="service" class="services">Szolgáltatások</a>
-            <a href="./pages/gallery.php" class="gall_on">Galéria</a>
-            <a href="./private/upload.php">Képfeltöltés</a>
+            <a href="gallery" class="gall_on">Galéria</a>
             <div class="d-flex justify-content-end">
                 <a href="contact" class="contact d-flex align-items-end justify-content-end">Elérhetőség</a>
             </div>
