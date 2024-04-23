@@ -43,6 +43,7 @@ Route::controller(PublicController::class)->group(function()
 
 Route::controller(PrivateController::class)->group(function()
 {
+    Route::get('editService', 'editService')->name('editService');
     Route::get('upload', 'upload')->name('upload');
     Route::get('editContForm', 'editContact')->name('editContForm');
     Route::put('updateContData', 'updateCont')->name('updateContData');
