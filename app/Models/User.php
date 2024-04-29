@@ -13,4 +13,17 @@ class User extends Authenticatable
         'address',
         'phoneNum',
     ];
+
+    public function Nail():HasMany
+    {
+        return $this->hasMany(Nail::class);
+    }
+    public function NailType()
+    {
+        return $this->BelongsTo(NailType::class);
+    }
+    public function Price()
+    {
+        return $this->BelongsTo(Price::class);
+    }
 }
