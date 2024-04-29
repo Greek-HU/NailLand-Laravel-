@@ -4,22 +4,23 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class NailType extends Model
 {
-    protected $table = 'nailType';
+    protected $table = 'nailTypes';
     protected $fillable = [
         'nailName',
     ];
 
-    public function NailSize(): BelongsTo
+    public function NailSize() : BelongsTo
     {
-        return $this>BelongsTo(NailSize::class);
+        return $this->belongsTo(NailSize::class);
     }
 
-    public function Price(): BelongsTo
+    public function Price() :BelongsTo
     {
-        return $this>BelongsTo(Price::class);
+        return $this->BelongsTo(Price::class);
     }
 }
 
