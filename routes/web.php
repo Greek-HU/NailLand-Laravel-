@@ -25,7 +25,6 @@ Route::controller(PageController::class)->group(function()
     Route::get('sign-in', 'signInTpl')->name('sign-in');
     Route::post('login', 'signInPost')->name('login-post');
     Route::get('logout', 'logout')->name('logout');
-    Route::get('private', 'home')->name('home')->middleware(LogInControll::class);
     Route::get('sign-up', 'create')->name('sign-up');
     Route::post('/store', 'signUp')->name('store');
     Route::get('upload', 'upload')->name('upload');
@@ -43,7 +42,13 @@ Route::controller(PublicController::class)->group(function()
 
 Route::controller(PrivateController::class)->group(function()
 {
+    // Típus szerkesztés
     Route::get('editService', 'editService')->name('editService');
+    Route::put('updateType', 'updateType')->name('updateType');
+    // Méret s Ár szerkesztése
+    Route::get('editSizePrice', 'editSizePrice')->name('editSizePrice');
+    Route::put('updateSizePrice', 'updateSizePrice')->name('updateSizePrice');
+
     Route::get('upload', 'upload')->name('upload');
     Route::get('editContForm', 'editContact')->name('editContForm');
     Route::put('updateContData', 'updateCont')->name('updateContData');
