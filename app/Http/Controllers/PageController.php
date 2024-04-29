@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
-use App\Models\Nail;
+use App\Models\Price;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -13,11 +13,7 @@ class PageController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function home()
-    {
-        
-        return view('private.editService');
-    }
+    
     public function dashboard()
     {
         return view('auth.dashboard');
@@ -30,7 +26,7 @@ class PageController extends Controller
     public function signInPost(Request $request)
     {
         $user = User::all();
-        $nail = Nail::all();
+        $price = Price::all();
         $credential = $request->validate([
             'email' => 'required|email',
             'password' => 'required'
@@ -38,7 +34,7 @@ class PageController extends Controller
  
         if(Auth::attempt($credential)) {
 
-            return redirect()->intended(route('home'));
+            return redirect()->intended(route('editService'));
         }
         return redirect(route('sign-in'))->with('error', 'Failed logged in!');
         
