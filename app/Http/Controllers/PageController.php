@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use App\Models\Nail;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -15,7 +16,7 @@ class PageController extends Controller
     public function home()
     {
         
-        return view('welcome');
+        return view('private.editService');
     }
     public function dashboard()
     {
@@ -29,6 +30,7 @@ class PageController extends Controller
     public function signInPost(Request $request)
     {
         $user = User::all();
+        $nail = Nail::all();
         $credential = $request->validate([
             'email' => 'required|email',
             'password' => 'required'
