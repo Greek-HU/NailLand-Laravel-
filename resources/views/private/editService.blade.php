@@ -1,6 +1,7 @@
 @extends('layoute.private')
 @extends('partials.privateNavBar')
 @section('content')
+
 <div id="service" class="services_box">
 
     <h2 class="" >Szolgáltatásaim</h2>
@@ -16,7 +17,10 @@
         <table class="table_1">
             <thead>
                 <tr>
-                    <th class="bg-danger-subtle p-4">{{ auth()->service()->nail_type}}</th>
+                    
+                    <th class="bg-danger-subtle p-4">{{ auth()->nail() }}
+                    </th>
+                    
                     <th class="bg-danger-subtle p-4">Méret</th>
                     <th class="bg-danger-subtle p-4 " scope="col">Ár</th>
                 </tr>
