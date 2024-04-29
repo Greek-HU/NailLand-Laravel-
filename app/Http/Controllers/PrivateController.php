@@ -3,7 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
-use App\Models\Service;
+use App\Models\Nail;
+use App\Models\Price;
 use Illuminate\Http\Request;
 
 class PrivateController extends Controller
@@ -17,7 +18,8 @@ class PrivateController extends Controller
     }
     public function editService()
     {
-        $services = Service::all();
+        $user = User::find(1);
+        $nail = Nail::all();
         return view('private.editService');
     }
     public function upload()
