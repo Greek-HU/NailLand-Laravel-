@@ -22,51 +22,46 @@
                 @method('PUT')
                 <table class="table_1">
                     <thead>
-                        <tr>
+                        <tr class="bg-danger-subtle p-4">
                             @if ( !empty($nailTypes) )
                             @foreach ($nailTypes as $nailType)
-                            <th class="bg-danger-subtle p-4">
+                            <th class="p-4">
                                 <input type="text" name="editnailtype" id="" value="{{ $nailType->type }}" size="4">
                             </th>
                             @endforeach
                             @else
-                            <p>Nincs megjeleníthető ár.</p>
+                            <p>Nincs megjeleníthető adat.</p>
                             @endif
 
-                            <th class="bg-danger-subtle p-4">Méret</th>
-                            <th class="bg-danger-subtle p-4 " scope="col">Ár</th>
+                            <th class="p-4">Méret</th>
+                            <th class="p-4">Ár</th>
+                            <th class="p-4"></th>
+                            <th class="p-4"></th>
                         </tr>
                     </thead>
-                    <tbody class="shadow p-4 mb-5 mx-5 bg-body-primery rounded-bottom">
-                        
-                        <tr>
-                            <th></th>
-                            <td></td>
-                            <td class="p-2"></td>
-                            
-                        </tr>
+                    <tbody class="shadow p-3 bg-body-primery rounded-bottom">
+                        @if ( !empty($nailSizes) )@foreach ($nailSizes as $nailSize)
                         <tr>
                             <td></td>
-                            <td></td>
-                            <td class="p-2"></td>
-                        </tr>
-                        <tr>
+                            <td>{{ $nailSize->size_name }}</td>
                             <td>
-                                <a href="editSizePrice">
-                                    <div class="text-black text-center d-flex align-items-center justify-content-center">
-                                        <i class="bi bi-pencil"></i>
-                                    </div>
-                                    <span>Szerkeszt</span>
+                                <a href="editSize/sizeID={{$nailSize->id}}">
+                                    <i class="text-black bi bi-pencil"></i>
                                 </a>
                             </td>
-                            <td></td>
-                            <td class="p-2"></td>
+                            @foreach ($nailPrices as $nailPrice)
+                            <td class="p-2">{{ $nailPrice->price }} Ft.</td>
+                            <td>
+                                <a href="editPrice/priceID={{$nailPrice->id}}">
+                                        <i class="text-black bi bi-pencil"></i>
+                                </a>
+                            </td>
+                            @endforeach
                         </tr>
-                        <tr>
-                            <td></td>
-                            <td></td>
-                            <td class="p-2"></td>
-                        </tr>
+                        @endforeach
+                        @endif
+
+
                     </tbody>
                 </table>
                 <div>
