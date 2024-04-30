@@ -46,8 +46,11 @@ Route::controller(PrivateController::class)->group(function()
     Route::get('editService', 'editService')->name('editService');
     Route::put('updateType', 'updateType')->name('updateType');
     // Méret s Ár szerkesztése
-    Route::get('editSizePrice', 'editSizePrice')->name('editSizePrice');
-    Route::put('updateSizePrice', 'updateSizePrice')->name('updateSizePrice');
+    Route::get('editSize/sizeID={id}', 'editSize')->name('editSize');
+    Route::put('updateSize', 'updateSize')->name('updateSize');
+
+    Route::get('editPrice/priceID={id}', 'editPrice')->name('editPrice');
+
 
     Route::get('upload', 'upload')->name('upload');
     Route::get('editContForm', 'editContact')->name('editContForm');
