@@ -7,9 +7,9 @@
         <div class="nav_links">
 
             <a href="/" class="fst_pg">Kezdőlap</a>
-            <a href="editService" class="services">Szolgáltatások</a>
+            <a href="{{route('editService')}}" class="services">Szolgáltatások</a>
             <a href="gallery" class="gall_on">Galéria</a>
-            <a href="upload">Képfeltöltés</a>
+            <a href="{{route('picUploader')}}">Képfeltöltés</a>
             <div class="d-flex justify-content-end">
                 <a href="editContForm" class="contact d-flex align-items-end justify-content-end">Elérhetőség</a>
             </div>
