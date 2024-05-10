@@ -10,7 +10,7 @@ class Pictures extends Model
     protected $table = 'pictures';
     protected $fillable = [
         'title',
-        'pic_type',
-        'pic_data',
+        'imgPlace',
+        'uploadDate',
     ];
 }
