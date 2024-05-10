@@ -45,14 +45,13 @@ Route::controller(PrivateController::class)->group(function()
     // Típus szerkesztés
     Route::get('editService', 'editService')->name('editService');
     Route::put('updateType', 'updateType')->name('updateType');
-    // Méret s Ár szerkesztése
-    Route::get('editSize/sizeID={id}', 'editSize')->name('editSize');
-    Route::put('updateSize', 'updateSize')->name('updateSize');
-
-    Route::get('editPrice/priceID={id}', 'editPrice')->name('editPrice');
-
-
-    Route::get('upload', 'upload')->name('upload');
+    // Méret és Ár szerkesztése
+    Route::get('editNailData/nailID={id}', 'editNail')->name('editNail');
+    Route::put('editNailData/updateNail/sizeID={id}', 'updateNail')->name('updateNail/sizeID={id}');
+    // Képfeltöltés
+    Route::get('picUploader', 'picUploader')->name('picUploader');
+    Route::post('storeImage', 'storeImage')->name('storeImage');
+    // Kapcsolatok szerkesztés
     Route::get('editContForm', 'editContact')->name('editContForm');
     Route::put('updateContData', 'updateCont')->name('updateContData');
 });
