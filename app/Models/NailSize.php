@@ -15,11 +15,11 @@ class NailSize extends Model
 
     public function NailType() : BelongsTo
     {
-        return $this->BelongsTo(NailType::class);
+        return $this->BelongsTo(NailType::class, 'type_size');
     }
 
     public function Price() : BelongsTo
     {
-        return $this->BelongsTo(Price::class);
+        return $this->BelongsTo(Price::class, 'size_price');
     }
 }
