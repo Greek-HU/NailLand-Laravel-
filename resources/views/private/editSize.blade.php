@@ -11,7 +11,8 @@
             <h6 class="alert alert-success">{{ session('status') }}</h6>
         @endif
         <div class="d-flex text-center p-3 table-box">
-            <form action="updateService" method="post">
+           
+            <form action="updateNail/sizeID={{$newid}}" method="post">
             @csrf
             @method('PUT')
             <table class="table_1">
@@ -33,11 +34,19 @@
                 </thead>
                 <tbody class="shadow p-4 mb-5 mx-5 bg-body-primery rounded-bottom">
                     <tr>
-                        <th></th>
-                        
-                        <td><input class="text-center" type="text" name="size" id="" size="1" value='{{ $nailSize->size_name}}'></td>
-                        
-                        <td class="p-2"></td>
+                        <th></th>                        
+                        <td>
+                            @foreach($oldSizes as $oldSize)
+                                <input type="text" size="2" maxlength="1" name="newSize" value="{{ $oldSize->size_name}}">
+                            @endforeach
+                        </td>
+                       
+                        <td class="p-2">
+                        @foreach ($oldSizes as $oldSize)
+                        <input type="number" name="newPrice" id="newPrice" value="{{$oldSize->price}}">
+                                                    
+                        @endforeach
+                        </td>
                     </tr>
                     
                 </tbody> 
