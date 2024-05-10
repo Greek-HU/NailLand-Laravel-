@@ -4,8 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\NailSize;
 use App\Models\NailType;
+use App\Models\Pictures;
 use App\Models\User;
-use App\Models\Price;
 use Illuminate\Http\Request;
 
 class PrivateController extends Controller
@@ -18,12 +18,10 @@ class PrivateController extends Controller
         $user = User::find(1);
         $nailTypes = NailType::all();
         $nailSizes = NailSize::all();
-        $nailPrices = Price::all();
         
         return view('private.editService', 
         ['nailTypes' => $nailTypes, 
-        'nailSizes' => $nailSizes,
-        'nailPrices' => $nailPrices
+        'nailSizes' => $nailSizes
         ]);
     }
     public function updateType(Request $request)
@@ -32,34 +30,55 @@ class PrivateController extends Controller
         $nailTypes->type = $request->input('editnailtype');
         $nailTypes->update();
 
-        return redirect()->route('editService')->with('status','A típusok, méretek és árak sikeresen elmentve!');
+        return redirect()->route('editService')->with('status','A típus sikeresen elmentve!');
     }
-    public function editSize(NailSize $id)
+    public function editNail(NailSize $id)
     {
         $nailTypes = NailType::all();
-        $price = $id->price;
-        return view('private.editSize', compact('price'), 
-        ['nailTypes' => $nailTypes]);
+        $nailSizes = NailSize::all();
+        $oldSizes = NailSize::find($id);
+        $newid = $id->id;
+        return view('private.editSize', 
+        ['nailTypes' => $nailTypes,
+        'nailSizes' => $nailSizes,
+        'oldSizes' => $oldSizes,
+        'newid' => $newid], compact('oldSizes')
+    );
     }
-    public function updateSize(Request $request)
+    public function updateNail(Request $request, $newid)
     {
-        $nailTypes = NailType::find(1);
-        $nailTypes->type = $request->input('editnailtype');
-        $nailTypes->update();
+        $nailSizes = NailSize::find($newid);
+        $nailSizes->size_name = $request->input('newSize');
+        $nailSizes->price = $request->input('newPrice');
+    
+        $nailSizes->update();
 
-        return redirect()->route('editService')->with('status','A típusok, méretek és árak sikeresen elmentve!');
+        return redirect()->route('editService')->with('status','A Méret és/vagy Ár sikeresen mentve!');
     }
-    public function editPrice(string $id)
+    public function picUploader()
     {
-        $nailTypes = NailType::all();
-        $nailSizes = NailSize::find($id);
-        $nailPrices = Price::all();
-        return view('private.editSize', ['nailTypes' => $nailTypes, 'nailSize' => $nailSizes, 'nailPrice' => $nailPrices
-    ]);
+        $pictures = Pictures::all();
+
+        return view('private.picUp', ['pictures' => $pictures]);
     }
-    public function upload()
+    public function storeImage(Request $request)
     {
-        return view('partials.picUp');
+        if($request->has('pictureURL'))
+        {
+            $file = $request->file('pictureURL');
+            $extension = $file->getClientOriginalExtension();
+
+            $filename = time().'.'.$extension;
+
+            $path = 'img/upload/';
+            $file->move($path, $filename);
+        }
+        Pictures::create([
+            'title' => $request->input('title'),
+            'imgPlace' => $path.$filename,
+
+        ],);
+        return redirect()->route('picUploader')->with('status', 'A kép sikeresen mentve lett!');
     }
     public function editContact()
     {
