@@ -8,14 +8,14 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class NailType extends Model
 {
-    protected $table = 'nailTypes';
+    protected $table = 'nail_type';
     protected $fillable = [
         'nailName',
     ];
 
     public function NailSize() : BelongsTo
     {
-        return $this->belongsTo(NailSize::class);
+        return $this->belongsTo(NailSize::class, 'type_size');
     }
 
     public function Price() :BelongsTo
