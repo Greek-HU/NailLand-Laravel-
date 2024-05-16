@@ -3,30 +3,25 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
-use App\Models\Price;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 
+
+
 class PageController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-    
-    public function dashboard()
-    {
-        return view('auth.dashboard');
-    }
+    //Belépési oldal
     public function signInTpl()
     {
         return view('auth.signIn');
     }
 
+    // Belépés
     public function signInPost(Request $request)
     {
         $user = User::all();
-        $price = Price::all();
+        
         $credential = $request->validate([
             'email' => 'required|email',
             'password' => 'required'
@@ -36,29 +31,33 @@ class PageController extends Controller
 
             return redirect()->intended(route('editService'));
         }
-        return redirect(route('sign-in'))->with('error', 'Failed logged in!');
+        return redirect(route('sign-in'))->with('error', 'Ön nem regisztrált felhasználó, rossz a megadott email cím, rossz jelszót adott meg! ');
         
     }
-    public function logOut(){
-        
-        Auth::logout();
-        return redirect(route('sign-in'));
-    }
+
+    // Regisztrációs oldal
     public function create()
     {
         return view('auth.signUpForm');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
+    // Regisztráció
     public function signUp(Request $request,)
     {
-        $request->validate([
-            'name' => 'required|min:3',
-            'email' => 'required|'
-        ],
-        );
+        $rules = [
+            'name' => 'required|min:3|regex:/^(?=*\s)$/',
+            'email' => 'required|',
+            //'password' => 'reqired|regex:/^(?=.*\.[A-Za-z0-9])$/'
+        ];
+        $messages = [
+            'min' => 'A karakter neve legalább 3 karakter hosszú legyen.',
+            'regex' => 'A karakter neve legalább 1 szóköz legyen.'
+
+            //'password.reqex' => 'A jelszónak tartalmaznia kell kis és nagy betüt, legalább egy darab számot és minimum 6 karakter hosszú kell hogy legyen!'
+        ];
+
+        $request->validate($rules, $messages);
+        
 
         $data = $request->all();
 
@@ -70,5 +69,12 @@ class PageController extends Controller
 
         return redirect()->route('sign-in')->with('succes', 'User saved.');
 
+    }
+
+    // Kijelentkezés
+    public function logOut(){
+        
+        Auth::logout();
+        return redirect(route('sign-in'));
     }
 }
