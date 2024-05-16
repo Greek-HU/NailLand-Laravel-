@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Pictures;
 use Illuminate\Http\Request;
 
 class PublicController extends Controller
@@ -31,7 +32,9 @@ class PublicController extends Controller
      */
     public function gallery()
     {
-        return view('public.gallery');
+        $pictures = Pictures::all();
+
+        return view('public.gallery', ['pictures' => $pictures]);
     }
 
     /**
