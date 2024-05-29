@@ -2,6 +2,15 @@
 @extends('partials.privateNavBar')
 
 @section('content')
+@if ($errors->any())
+            <div class="alert alert-danger">
+              <ul>
+                @foreach ($errors->all() as $error)
+                <li>{{ $error }}</li>
+                @endforeach
+              </ul>
+            </div>
+            @endif
 <div class="box pb-4">
     <div class="text box_color">
         <div class="text-center form_box">
@@ -17,7 +26,7 @@
                 </div>
                 <div>
                     <label for="cim">Cím:</label>
-                    <input type="text" name="title">
+                    <input class="rounded text-center" type="text" name="title">
                 </div>
                 <div class="fomr_btn">
                     <input class="btn btn-dark" type="submit" value="Feltöltés" name="upload_button">
@@ -27,51 +36,68 @@
         <div class="container-fluid">
             <div class="row">
                 <div class="gallery col-12 col-md-8">
+                    @if($pictures != null)
                     @foreach ($pictures as $picture)
                     <div class="gallery__column">
                         <div class="gallery__link">
                             <figure class="gallery__thumb">
-                                <img src="{{$picture->imgPlace}}" onclick="img_box(this)" alt="Portrait by Jessica Felicio" height="250" class="gallery__image">
+                                <img src="{{$picture->imgPlace}}" alt="{{$picture->title}}" height="250" class="gallery__image rounded" data-id="{{$picture->id}}">
                                 <figcaption class="gallery__caption">{{$picture->title}}</figcaption>
                             </figure>
                             <!-- Modal Button -->
                             <div class="d-flex justify-content-center">
-                                    <a class="btn btn-success" href="editPic/picID={{$picture->id}}" data-bs-toggle="modal" data-bs-target="#editModal">Szerkesztés</a>
-
-                                
-                                <a  class="btn btn-danger ms-2" href="#" data-bs-toggle="modal" data-bs-target="#xModal" data-pic-id="{{$picture->id}}" onclick="img_box(this)">
-                                    X
-                                </a>
+                                    <button type="button" class="btn btn-success editbtn" value="{{$picture->id}}">Szerkesztés</button>
+                                    <button type="button" class="btn btn-danger ms-2 delbtn" value="{{$picture->id}}">Törlés</button>
                             </div>
                         </div>
                     </div>
                     @endforeach
+                    
+                    @endif
                 </div>
             </div>
         </div>
+        @include('private.editImg')
+        @include('private.xmodal')
     </div>
 </div>
 </div>
-<!--Delete Modal ->
-@foreach ($pictures as $picture)
-<form action="destroyPic/picID=" method="post">
-<div class="modal fade" id="xModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Mégsem</button>
-                <button type="submit" class="btn btn-primary">Törlés</button>
-            </div>
-        </div>
-    </div>
-</div>
-</form>
-@endforeach-->
+
 @endsection
-@extends('private.xmodal')
+@section('scripts')
+<script>
+   
+    $(document).ready(function () {
+        $(document).on('click', '.editbtn', function(){
+            var img_id = $(this).val();
+            $('#editImg').modal('show');
+
+            $.ajax({
+                type: "GET",
+                url: "/editPic/"+img_id,
+                success: function(response){
+                    $('#editedImg').attr('src', response.picture.imgPlace);
+                    $('#editedImgTitle').val(response.picture.title);
+                    $('#img_id').val(img_id);
+                }
+            });
+        });
+    });
+    $(document).ready(function () {
+        $(document).on('click', '.delbtn', function(){
+            var delimg_id = $(this).val();
+            $('#xModal').modal('show');
+
+            $.ajax({
+                type: "GET",
+                url: "/quest/"+delimg_id,
+                success: function(response){
+                    $('#deletedImg').attr('src', response.picture.imgPlace);
+                    $('#deletedImgTitle').text(response.picture.title);
+                    $('#delimg_id').val(delimg_id);
+                }
+            });
+        });
+    });
+</script>
+@endsection
