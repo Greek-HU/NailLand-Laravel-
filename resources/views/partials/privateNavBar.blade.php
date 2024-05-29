@@ -12,6 +12,8 @@
             <a href="{{route('picUploader')}}">Képfeltöltés</a>
             <div class="d-flex justify-content-end">
                 <a href="editContForm" class="contact d-flex align-items-end justify-content-end">Elérhetőség</a>
+                <a href="{{route('logout')}}">Kijelentkezés</a>
+
             </div>
         </div>
         <a href="javascript:void(0);" class="icon text-center" onclick="mobil_navbar()">
