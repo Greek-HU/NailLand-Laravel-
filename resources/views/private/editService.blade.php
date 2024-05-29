@@ -12,7 +12,11 @@
         <button class="Playfair">Playfair</button>
         <button class="Lobster">Lobster</button>
     </div>
+    
     <div class="d-table m-auto mt-5">
+    <!--div class="d-flex justify-content-end ">
+        <button class="btn btn-primary">Új elem hozzáadása</button>
+    </div-->
         @if (session('status'))
         <h6 class="alert alert-success">{{ session('status') }}</h6>
         @endif
@@ -20,8 +24,8 @@
             <form action="updateType" method="post">
                 @csrf
                 @method('PUT')
-                <table class="table_1">
-                    <thead>
+                <table class="table_1 rounded">
+                    <thead class="rounded-top">
                         <tr class="bg-danger-subtle p-4">
                             @if ( !empty($nailTypes) )
                             @foreach ($nailTypes as $nailType)
@@ -40,13 +44,11 @@
                         </tr>
                     </thead>
                     <tbody class="shadow p-3 bg-body-primery rounded-bottom">
-                        @if ( !empty($nailSizes) )@foreach ($nailSizes as $nailSize)
+                        @if ( !empty($nailSizes) )
+                        @foreach ($nailSizes as $nailSize)
                         <tr>
+                            <td></td>
                             <td>{{ $nailSize->size_name }}</td>
-                            <td>
-                                <a href="editSize/sizeID={{$nailSize->id}}">
-                                </a>
-                            </td>
                             <td class="p-2">{{ $nailSize->price }} Ft.</td>
                             <td>
                                 <a href="editNailData/nailID={{$nailSize->id}}">
