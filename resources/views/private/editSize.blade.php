@@ -37,13 +37,13 @@
                         <th></th>                        
                         <td>
                             @foreach($oldSizes as $oldSize)
-                                <input type="text" size="2" maxlength="1" name="newSize" value="{{ $oldSize->size_name}}">
+                                <input class="text-center" type="text" size="2" maxlength="1" name="newSize" value="{{ $oldSize->size_name}}">
                             @endforeach
                         </td>
                        
                         <td class="p-2">
                         @foreach ($oldSizes as $oldSize)
-                        <input type="number" name="newPrice" id="newPrice" value="{{$oldSize->price}}">
+                        <input class="text-center" type="number" name="newPrice" id="newPrice" value="{{$oldSize->price}}">
                                                     
                         @endforeach
                         </td>
