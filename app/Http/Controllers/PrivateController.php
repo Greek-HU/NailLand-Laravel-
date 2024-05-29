@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Models\NailSize;
 use App\Models\NailType;
-use App\Models\Pictures;
 use App\Models\User;
 use Illuminate\Http\Request;
 
