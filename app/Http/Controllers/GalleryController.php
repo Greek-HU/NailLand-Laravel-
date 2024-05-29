@@ -3,7 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Models\Pictures;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Validation\Rules\File as RulesFile;
 
 class GalleryController extends Controller
 {
@@ -22,12 +27,26 @@ class GalleryController extends Controller
      */
     public function create(Request $request)
     {
+        $rules = [
+            'title' => 'min:3',
+            'picturesURL' => 'required|image|mimes:png,jpg,jpeg,webp|max:10240',
+        ];
+        $messages = [
+            'min' => 'A kép neve minimum 3 karakter hosszúnak kell lennie!',
+            'mimes' => 'A kép formátuma helytelen!',
+            'max' => 'A kép mérete túl nagy!',
+            'required' => 'A kép formátuma nem mefelelő!',
+        ];
+
+        $request->validate($rules, $messages);
+
         if($request->has('pictureURL'))
         {
             $file = $request->file('pictureURL');
             $extension = $file->getClientOriginalExtension();
 
-            $filename = time().'.'.$extension;
+            $filename = Carbon::now()->format('His'). '.' .$extension;
+            //$filename = time().'.'.$extension;
 
             $path = 'img/upload/';
             $file->move($path, $filename);
@@ -35,6 +54,7 @@ class GalleryController extends Controller
         Pictures::create([
             'title' => $request->input('title'),
             'imgPlace' => $path.$filename,
+
 
         ],);
         
@@ -45,31 +65,47 @@ class GalleryController extends Controller
      */
     public function edit(Request $request, $id)
     {
-        $picture = Pictures::find($id);
+        $rules = [
+            'newTitle' => 'min:3',
+        ];
+        $messages = [
+            'min' => 'A kép neve minimum 3 karakter hosszúnak kell lennie!',
+        ];
 
-        return view('private.editModal', ['id' => $id]);
-    }
-    public function update(Request $request, string $id)
-    {
+        $request->validate($rules, $messages);
         $picture = Pictures::find($id);
+        return response()->json([
+            'status'=>200,
+            'picture' => $picture,
+        ]);
+    }
+    public function update(Request $request)
+    {
+        $img_id = $request->input('img_id');
+        $picture = Pictures::find($img_id);
         $picture->title = $request->input('newTitle');
         $picture->update();
 
         return redirect()->route('picUploader')->with('status', 'A kép adatai frissültek!');
     }
-    public function questDestroy(Request $request, $id)
+    public function questDestroy($id)
     {
         $picture = Pictures::find($id);
-        $delID = $id->id;
-        return view('private.xmodal', ['picture' => $picture, 'delID' => $delID]);
+        return response()->json([
+            'status'=>200,
+            'picture' => $picture,
+        ]);
     }
     /*
      *Kép trölés
     */
-    public function destroy($delID)
+    public function destroy(Request $request)
     {
-        $picture = Pictures::find($delID);
+        $img_id = $request->input('delimg_id');
+        $picture = Pictures::find($img_id);
+        $picturePath = 'img/upload/' . $picture->title;
+        File::delete($picturePath);
         $picture->delete();
-        return redirect()->back()->with('status', 'A kép sikeresen törölve lett!');
+        return redirect()->route('picUploader')->with('status', 'A kép sikeresen törölve lett!');
     }
 }
