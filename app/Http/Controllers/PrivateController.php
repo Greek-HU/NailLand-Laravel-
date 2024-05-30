@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\NailSize;
 use App\Models\NailType;
+use App\Models\Price;
 use App\Models\User;
 use Illuminate\Http\Request;
 
@@ -16,13 +17,16 @@ class PrivateController extends Controller
     {
         $user = User::find(1);
         $nailTypes = NailType::all();
-        $nailSizes = NailSize::all();
+        $nailSizes = NailSize::with('prices')->get();
+        $nailPrices = Price::all();
+        
 
         return view(
             'private.editService',
             [
                 'nailTypes' => $nailTypes,
-                'nailSizes' => $nailSizes
+                'nailSizes' => $nailSizes,
+                'nailPrices' => $nailPrices,
             ]
         );
     }
@@ -33,12 +37,14 @@ class PrivateController extends Controller
         $nailTypes->update();
 
         return redirect()->route('editService')->with('status', 'A típus sikeresen elmentve!');
+        
     }
     public function editNail(NailSize $id)
     {
         $nailTypes = NailType::all();
         $nailSizes = NailSize::all();
         $oldSizes = NailSize::find($id);
+        $oldPrices = NailSize::with('prices')->get();
         $newid = $id->id;
         return view(
             'private.editSize',
@@ -46,6 +52,7 @@ class PrivateController extends Controller
                 'nailTypes' => $nailTypes,
                 'nailSizes' => $nailSizes,
                 'oldSizes' => $oldSizes,
+                'oldPrices' => $oldPrices,
                 'newid' => $newid
             ],
             compact('oldSizes')
