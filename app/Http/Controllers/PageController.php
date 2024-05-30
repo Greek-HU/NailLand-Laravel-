@@ -45,7 +45,7 @@ class PageController extends Controller
     public function signUp(Request $request,)
     {
         $rules = [
-            'name' => 'required|min:3|regex:/^(?=*\s)$/',
+            'name' => 'required|min:3',
             'email' => 'required|',
             //'password' => 'reqired|regex:/^(?=.*\.[A-Za-z0-9])$/'
         ];
