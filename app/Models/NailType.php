@@ -10,7 +10,9 @@ class NailType extends Model
 {
     protected $table = 'nail_type';
     protected $fillable = [
-        'nailName',
+        'type',
+        'size_title',
+        'price_title',
     ];
 
     public function NailSize() : BelongsTo
