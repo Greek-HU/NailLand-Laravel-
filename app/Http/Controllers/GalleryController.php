@@ -6,9 +6,6 @@ use App\Models\Pictures;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
-use Illuminate\Support\Facades\Storage;
-use Illuminate\Support\Facades\Validator;
-use Illuminate\Validation\Rules\File as RulesFile;
 
 class GalleryController extends Controller
 {
