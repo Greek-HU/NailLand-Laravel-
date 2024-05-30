@@ -37,16 +37,19 @@
                         <th></th>                        
                         <td>
                             @foreach($oldSizes as $oldSize)
-                                <input class="text-center" type="text" size="2" maxlength="1" name="newSize" value="{{ $oldSize->size_name}}">
+                            <input class="text-center" type="text" size="2" maxlength="1" name="newSize" value="{{ $oldSize->size_name}}">
                             @endforeach
+
                         </td>
-                       
-                        <td class="p-2">
-                        @foreach ($oldSizes as $oldSize)
-                        <input class="text-center" type="number" name="newPrice" id="newPrice" value="{{$oldSize->price}}">
-                                                    
+                       @foreach($oldPrices as $oldPrice)
+                       @if($oldSize->id == $oldPrice->id)
+                       @foreach($oldPrice->prices as $price)
+                        <td class="p-2 d-flex">
+                            <input class="text-center" type="number" name="newPrice" id="newPrice" value="{{ $price->amount }}">
+                        </td>
                         @endforeach
-                        </td>
+                        @endif
+                        @endforeach
                     </tr>
                     
                 </tbody> 
