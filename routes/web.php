@@ -8,17 +8,6 @@ use App\Http\Middleware\NameToUppercaseMiddleware;
 use App\Http\Middleware\LogInMiddleware;
 use Illuminate\Support\Facades\Route;
 
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider and all of them will
-| be assigned to the "web" middleware group. Make something great!
-|
-*/
-
 
 Route::controller(PageController::class)->group(function()
 {
@@ -47,6 +36,13 @@ Route::controller(PrivateController::class)->middleware(LogInMiddleware::class)-
     // Méret és Ár szerkesztése
     Route::get('editNailData/nailID={id}', 'editNail')->name('editNail');
     Route::put('editNailData/updateNail/sizeID={id}', 'updateNail')->name('updateNail/sizeID={id}');
+
+    //Doboz létrehozás
+    Route::get('addnewBox', 'addBox')->name('addnewBox');
+    Route::post('createnewBox', 'createBox')->name('createnewBox');
+
+    //Doboz törlése
+    Route::get('typeDestroy/{id}', 'destroy')->name('typeDestroy');
 
     // Kapcsolatok szerkesztés
     Route::get('editContForm', 'editContact')->name('editContForm');
