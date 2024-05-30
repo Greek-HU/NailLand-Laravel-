@@ -2,21 +2,21 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class SizePrice extends Model
 {
+    use HasFactory;
     protected $table = 'size_price';
-    protected $fillable = [ 'size_id', 'price_id' ];
 
-    public function NailSize() : BelongsTo
+    public function NailSize()
     {
-        return $this->BelongsTo(NailSize::class);
+        return $this->belongsTo(NailSize::class);
     }
 
-    public function Price() : BelongsTo
+    public function price()
     {
-        return $this->BelongsTo(Price::class);
+        return $this->belongsTo(Price::class);
     }
 }
