@@ -42,19 +42,23 @@
                         </tr>
                     </thead>
                     <tbody class="shadow p-3 bg-body-primery rounded-bottom">
-                        @if ( !empty($nailSizes) )
-                        @foreach ($nailSizes as $nailSize)
-                        <tr>
-                            <td></td>
-                            <td>{{ $nailSize->size_name }}</td>
-                            <td class="p-2">{{ $nailSize->price }} Ft.</td>
-                            <td>
-                                <a href="editNailData/nailID={{$nailSize->id}}">
-                                        <i class="text-black bi bi-pencil"></i>
-                                </a>
-                            </td>
-                        </tr>
-                        @endforeach
+                        @if ( !empty($nailSizes))
+                            @foreach ($nailSizes as $nailSize)
+                                    <tr>
+                                        <td></td>
+                                        <td>{{ $nailSize->size_name }}</td>
+                                        <td class="p-2">
+                                            @foreach($nailSize->prices as $price)
+                                                {{$price->amount}} Ft.
+                                            @endforeach
+                                        </td>
+                                        <td>
+                                            <a href="editNailData/nailID={{$nailSize->id}}">
+                                                    <i class="text-black bi bi-pencil"></i>
+                                            </a>
+                                        </td>
+                                    </tr>
+                            @endforeach
                         @endif
                     </tbody>
                 </table>
