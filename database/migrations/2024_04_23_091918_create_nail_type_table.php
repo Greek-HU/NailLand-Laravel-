@@ -14,6 +14,8 @@ return new class extends Migration
         Schema::create('nail_type', function (Blueprint $table) {
             $table->id();
             $table->string('type');
+            $table->string('size_title');
+            $table->string('price_title');
             $table->timestamps();
         });
     }
