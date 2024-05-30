@@ -99,5 +99,19 @@
             });
         });
     });
+    $(document).ready(function () {
+        $(document).on('click', '.newBoxBtn', function(){
+            $('#addBox').modal('show');
+
+            $.ajax({
+                type: "GET",
+                url: "/addBox",
+                success: function(response){
+                    //$('#newNailType').val(response.nailType.type);
+                    console.log(nailType);
+                }
+            });
+        });
+    });
 </script>
 @endsection
