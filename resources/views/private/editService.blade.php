@@ -14,33 +14,31 @@
     </div>
     
     <div class="d-table m-auto mt-5">
-    <!--div class="d-flex justify-content-end ">
-        <button class="btn btn-primary">Új elem hozzáadása</button>
-    </div-->
+    <div class="d-flex justify-content-end ">
+        <button type="button" class="btn btn-primary newBoxBtn">Új elem hozzáadása</button>
+    </div>
         @if (session('status'))
         <h6 class="alert alert-success">{{ session('status') }}</h6>
         @endif
-        <div class="d-flex text-center p-3 table-box">
+        <div class="d-flex text-center p-3 table-box">@if ( !empty($nailTypes) )@foreach ($nailTypes as $nailType)
             <form action="updateType" method="post">
                 @csrf
                 @method('PUT')
                 <table class="table_1 rounded">
                     <thead class="rounded-top">
                         <tr class="bg-danger-subtle p-4">
-                            @if ( !empty($nailTypes) )
-                            @foreach ($nailTypes as $nailType)
                             <th class="p-4">
-                                <input type="text" name="editnailtype" id="" value="{{ $nailType->type }}" size="4">
+                                <input type="text" name="editnailtype" id="" value="{{ $nailType->type }}" size="7">
                             </th>
-                            @endforeach
-                            @else
-                            <p>Nincs megjeleníthető adat.</p>
-                            @endif
-
-                            <th class="p-4">Méret</th>
-                            <th class="p-4">Ár</th>
+                            <th class="p-4">{{ $nailType->size_title }}</th>
+                            <th class="p-4">{{ $nailType->price_title }}</th>
                             <th class="p-4"></th>
-                            <th class="p-4"></th>
+                            <th class="p-4">
+                                <a href="typeDestroy/{{$nailType->id}}">
+                                        <i class="text-black bi bi-trash3"></i>
+                                       
+                                </a>
+                            </th>
                         </tr>
                     </thead>
                     <tbody class="shadow p-3 bg-body-primery rounded-bottom">
@@ -64,6 +62,10 @@
                     <button type="submit">Mentés</button>
                 </div>
             </form>
+            @endforeach
+                            @else
+                            <p>Nincs megjeleníthető adat.</p>
+                            @endif
             <table class="table_2">
                 <thead>
                     <tr>
@@ -126,7 +128,28 @@
                     </tr>
                 </tbody>
             </table>
-
+            @include('partials.addBox')
         </div>
     </div>
+</div>
+    @endsection
+    @section('script')
+    <script>
+        $(document).ready(function () {
+        $(document).on('click', '.newBoxBtn', function(){
+            $('#addBox').modal('show');
+
+            $.ajax({
+                type: "GET",
+                url: "/addnewBox",
+                success: function(response){
+                    $('#newNailType').text(response.nailType.type);
+                    $('#newNailSize').val(response.nailType.size_title);
+                    $('#newNailPrice').text(response.nailType.price_title);
+                    //console.log(response.nailType);
+                }
+            });
+        });
+    });
+    </script>
     @endsection
