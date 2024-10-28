@@ -5,79 +5,100 @@
 <div id="service" class="services_box">
 
     <h2 class="">Szolgáltatásaim</h2>
-    <div>
+    <!--div>
         <span>Válasszon betütípust:</span>
         <button class="Permanent">Permanent</button>
         <button class="Poppins">Poppins</button>
         <button class="Playfair">Playfair</button>
         <button class="Lobster">Lobster</button>
-    </div>
-    
+    </div-->
+
     <div class="d-table m-auto mt-5">
-    <div class="d-flex justify-content-end ">
-        <button type="button" class="btn btn-primary newBoxBtn">Új elem hozzáadása</button>
-    </div>
+        <div class="d-flex justify-content-end ">
+            <button type="button" class="btn btn-primary newBoxBtn">Új elem hozzáadása</button>
+        </div>
         @if (session('status'))
         <h6 class="alert alert-success">{{ session('status') }}</h6>
         @endif
-        <div class="d-flex text-center p-3 table-box">@if ( !empty($nailTypes) )@foreach ($nailTypes as $nailType)
-            <form action="updateType" method="post">
+        <div class="d-flex text-center p-3 table-box">
+            @if ( !empty($nailTypes) )
+            @foreach ($nailTypes as $nailType)
+            <form action="updateType={{ $nailType->id }}" method="post">
                 @csrf
                 @method('PUT')
-                <table class="table_1 rounded">
-                    <thead class="rounded-top">
-                        <tr class="bg-danger-subtle p-4">
-                            <th class="p-4">
-                                <input type="text" name="editnailtype" id="" value="{{ $nailType->type }}" size="7">
+                <table class="card">
+                    <thead class="d-flex justify-content-center">
+                        <tr>
+                            <th class="p-4 nailType">
+                                {{ $nailType->type }}
+                                <a href="{{$nailType->id}}" class="bi bi-pencil px-2 text-black showTypeInput"></a>
+                            </th>
+                            <th class="typeInput">
+                                <input type="text" name="editnailtype" id="{{ $nailType->id }}" value="{{ $nailType->type }}" size="3">
+                                <a href="{{$nailType->id}}" class="bi bi-pencil px-1 text-black showTypeInput"></a>
                             </th>
                             <th class="p-4">{{ $nailType->size_title }}</th>
                             <th class="p-4">{{ $nailType->price_title }}</th>
-                            <th class="p-4"></th>
                             <th class="p-4">
                                 <a href="typeDestroy/{{$nailType->id}}">
-                                        <i class="text-black bi bi-trash3"></i>
-                                       
+                                    <i class="text-black bi bi-trash3"></i>
+
                                 </a>
                             </th>
                         </tr>
                     </thead>
+
                     <tbody class="shadow p-3 bg-body-primery rounded-bottom">
-                        @if ( !empty($nailSizes))
-                            @foreach ($nailSizes as $nailSize)
-                                    <tr>
-                                        <td></td>
-                                        <td>{{ $nailSize->size_name }}</td>
-                                        <td class="p-2">
-                                            @foreach($nailSize->prices as $price)
-                                                {{$price->amount}} Ft.
-                                            @endforeach
-                                        </td>
-                                        <td>
-                                            <a href="editNailData/nailID={{$nailSize->id}}">
-                                                    <i class="text-black bi bi-pencil"></i>
-                                            </a>
-                                        </td>
-                                    </tr>
+                        @foreach ($Naildatas as $Naildata)
+@foreach($Naildata['Size'] as $Size)
+@foreach($Naildata['Price'] as $Price)
+
+                    <tr>                            
+
+                            <td class="px-5"> {{$Naildata}} </td>
+
+                            <td class="px-4">{{$Size->size_name}}</td>
+                            <td class="sizePrice px-4" value="{{$Price->id}}">
+                                {{$Price->amount}} Ft.
+                                <i class="bi bi-pencil px-4 text-black showPriceInput" ></i>
+                            </td> 
+                            <td class="priceInput">
+                                <input type="text" name="newAmount" max="19999" size="2" value="{{$Price->amount}}">
+                                <a href="#" class="bi bi-pencil px-4 text-black showPriceInput"></a>
+                            </td>
+                            
+                                                   
+
+                            
+                        </tr>
+                        @endforeach
+                        @endforeach
                             @endforeach
-                        @endif
-                    </tbody>
+                        <tr class="d-flex justify-content-center">
+                           <td class="my-3">
+                            <a href="#" class="btn btn-success newElementBtn">Hozzáad</a>
+                        </td> 
+                        </tr>
+                    </tbody>                  
                 </table>
                 <div>
                     <button type="submit">Mentés</button>
                 </div>
             </form>
+
+            @include('partials.addElement')
             @endforeach
-                            @else
-                            <p>Nincs megjeleníthető adat.</p>
-                            @endif
-            <table class="table_2">
-                <thead>
+            @else
+            <p>Nincs megjeleníthető adat.</p>
+            @endif
+            <!--table class="card">
+                <thead class="d-flex justify-content-center">
                     <tr>
-                        <th class="bg-danger-subtle p-4">Saját köröm</th>
-                        <th class="bg-danger-subtle p-4">Ár</th>
+                        <th class="p-4">Saját köröm</th>
+                        <th class="p-4">Ár</th>
                     </tr>
                 </thead>
-                <tbody class="shadow p-4 mb-5 mx-5 bg-body-primery rounded-bottom">
+                <tbody class="shadow p-4 mb-5 mx-5 bg-body-primery">
                     <tr>
                         <td>Sima manikűr</td>
                         <td class="p-2">2000 Ft.</td>
@@ -101,19 +122,19 @@
                 </tbody>
             </table>
 
-            <table class="table_3">
-                <thead class="">
+            <table class="card">
+                <thead class="d-flex justify-content-center">
                     <tr>
-                        <th class="bg-danger-subtle p-3 col-5">Műköröm építés/töltés - Acryl gél- Gél lakk</th>
-                        <th class="bg-danger-subtle p-4">Méret</th>
-                        <th class="bg-danger-subtle p-4">Ár</th>
+                        <th class="p-3 col-5">Műköröm építés/töltés - Acryl gél- Gél lakk</th>
+                        <th class="p-4">Méret</th>
+                        <th class="p-4">Ár</th>
                     </tr>
                 </thead>
-                <tbody class="shadow p-4 mb-5 mx-5 bg-body-primery rounded-bottom">
-                    <tr>
+                <tbody class="shadow p-4 mb-5 mx-4">
+                    <tr class="">
                         <td></td>
-                        <td>S</td>
-                        <td class="p-2">5500 Ft.</td>
+                        <td class="p-4 mx-2">S</td>
+                        <td class="p-4 ">5500 Ft.</td>
                     </tr>
                     <tr>
                         <td></td>
@@ -131,29 +152,9 @@
                         <td class="p-2">8500 Ft.</td>
                     </tr>
                 </tbody>
-            </table>
+            </table-->
             @include('partials.addBox')
         </div>
     </div>
 </div>
-    @endsection
-    @section('script')
-    <script>
-        $(document).ready(function () {
-        $(document).on('click', '.newBoxBtn', function(){
-            $('#addBox').modal('show');
-
-            $.ajax({
-                type: "GET",
-                url: "/addnewBox",
-                success: function(response){
-                    $('#newNailType').text(response.nailType.type);
-                    $('#newNailSize').val(response.nailType.size_title);
-                    $('#newNailPrice').text(response.nailType.price_title);
-                    //console.log(response.nailType);
-                }
-            });
-        });
-    });
-    </script>
-    @endsection
+@endsection
