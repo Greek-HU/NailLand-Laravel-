@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\NailGroupment;
 use App\Models\NailSize;
 use App\Models\NailType;
 use App\Models\Price;
-use App\Models\User;
+use App\Models\SizePrice;
+use App\Persistence\Model\User;
 use Illuminate\Http\Request;
 
 class PrivateController extends Controller
@@ -16,28 +18,41 @@ class PrivateController extends Controller
     public function editService()
     {
         $user = User::find(1);
-        $nailTypes = NailType::all();
-        $nailSizes = NailSize::with('prices')->get();
+        $nailTypes = NailType::with('size', 'price')->get();
+        $nailSizes = NailSize::with('type', 'prices')->get();
         $nailPrices = Price::all();
-        
+        $Naildatas = [];
+        foreach ($nailTypes as $nailType){
+            $Size = $nailType->size;
+            $Price = $nailType->price;
+        }
+        foreach ($nailSizes as $nailSize){
+            $SizePrice = $nailSize->type;
+        }
+        $Naildatas[] = [
+            'Size' => $Size,
+            'Price' => $Price,
+            'SizePrice' => $SizePrice,
+        ];
 
         return view(
             'private.editService',
             [
+                'Naildatas' => $Naildatas,
                 'nailTypes' => $nailTypes,
                 'nailSizes' => $nailSizes,
                 'nailPrices' => $nailPrices,
             ]
         );
     }
-    public function updateType(Request $request)
+    public function updateType(Request $request, $type_id)
     {
-        $nailTypes = NailType::find(1);
+        $nailTypes = NailType::find($type_id);
         $nailTypes->type = $request->input('editnailtype');
         $nailTypes->update();
 
         return redirect()->route('editService')->with('status', 'A típus sikeresen elmentve!');
-        
+
     }
     public function editNail(NailSize $id)
     {
@@ -95,23 +110,79 @@ class PrivateController extends Controller
     public function addBox(Request $request)
     {
         $nailType = NailType::all();
+        $nailSizes = NailSize::all();
+        $nailsGroupments = NailGroupment::all();
+
+
         return response()->json([
             'status' => 200,
             'nailType' => $nailType,
+            'nailSizes' => $nailSizes,
+            'nailsGroupments' => $nailsGroupments
+
+
         ]);
     }
     public function createBox(Request $request)
     {
         $nailType = NailType::all();
-        
 
         $data = $request->all();
-        
+
         $data = NailType::create([
             'type' => $data['newNailType'],
             'size_title' => $data['newNailSize'],
             'price_title' => $data['newNailPrice'],
         ]);
+
+        return redirect()->route('editService')->with('succes', 'Az új elem létrehozva!');
+
+    }
+    public function addElement(Request $request)
+    {
+        $nailTypes = NailType::all();
+        $nailSize = NailSize::all();
+        $nailSizes = NailSize::with('prices')->get();
+        $Prices = Price::all();
+        $SizePrice = SizePrice::all();
+        $nailsGroupments = NailGroupment::all();
+        return response()->json([
+            'status' => 200,
+            'nailTypes' => $nailTypes,
+            'nailSize' => $nailSize,
+            'nailSizes' => $nailSizes,
+            'sizeprice' => $SizePrice,
+            'nailPrices' => $Prices,
+            'nailsGroupments' => $nailsGroupments
+
+        ]);
+    }
+    public function createElement(Request $request)
+    {
+        $nailSize = NailSize::all();
+        $Price = Price::all();
+
+        $data = $request->all();
+        //dd($data);
+        NailGroupment::create([
+            'type_id' => $data['newType'],
+            'size_id' => $data['newNailSize'],
+            'price_id' => $data['newAmount'],
+        ]);/*
+        Price::create([
+            'price_id' => $data['newAmount'],
+        ]);
+/*
+        $data = $request->all();
+
+       $data = NailSize::create([
+            'size_name' => $data['newNailSize'],
+        ]);
+
+        $data = Price::create([
+            'amount' => $data['newAmount'],
+        ]);*/
+
 
         return redirect()->route('editService')->with('succes', 'Az új elem létrehozva!');
 
