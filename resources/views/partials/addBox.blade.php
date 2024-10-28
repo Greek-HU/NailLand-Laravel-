@@ -9,23 +9,20 @@
 
                 </div>
                 <div class="modal-body text-center">
-                    <table class="table_1 rounded">
-
-                        <thead class="rounded-top">
-                            <tr class="bg-danger-subtle p-4">
+                    <table class="card">
+                        <thead class="d-flex justify-content-center">
+                            <tr>
                                 <th class="p-4">
                                     <input type="text" name="newNailType" id="newNailType" size="7" class="text-center" placeholder="Köröm neve">
                                 </th><br>
                                 <th class="p-4">
-                                    <input type="text" name="newNailSize" id="newNailSize" size="4" class="text-center" value="Méret">
+                                    <input type="text" name="newNailSize" id="newNailSize" size="5" class="text-center" placeholder="Méret">
                                 </th>
                                 <th class="p-4">
-                                    <input type="text" name="newNailPrice" id="newNailPrice" size="4"  class="text-center" value="Ár">
+                                    <input type="text" name="newNailPrice" id="newNailPrice" size="4" class="text-center" value="Ár">
                                 </th>
                             </tr>
                         </thead>
-                        <div>
-                        </div>
                     </table>
                 </div>
                 <div class="modal-footer">
