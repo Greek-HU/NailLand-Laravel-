@@ -3104,7 +3104,10 @@ textarea.form-control-lg {
   display: inline-block;
   margin-right: 1rem;
 }
-
+.btn-color{
+  background-color: #E68A37 !important;
+  color: white !important;
+}
 .btn-check {
   position: absolute;
   clip: rect(0, 0, 0, 0);
@@ -3296,6 +3299,7 @@ textarea.form-control-lg {
 }
 
 .input-group {
+  background-color: white;
   position: relative;
   display: flex;
   flex-wrap: wrap;
@@ -5314,11 +5318,13 @@ fieldset:disabled .btn {
 .card-header {
   padding: var(--bs-card-cap-padding-y) var(--bs-card-cap-padding-x);
   margin-bottom: 0;
+  background-color: #E68A37;
   color: var(--bs-card-cap-color);
-  background-color: var(--bs-card-cap-bg);
   border-bottom: var(--bs-card-border-width) solid var(--bs-card-border-color);
 }
-
+.card-header h4{
+  color: white;
+}
 .card-header:first-child {
   border-radius: var(--bs-card-inner-border-radius) var(--bs-card-inner-border-radius) 0 0;
 }
@@ -21220,6 +21226,8 @@ fieldset:disabled .btn {
 .card.card-plain {
   background-color: transparent;
   box-shadow: none;
+  border: 1px solid #E68A37;
+  box-shadow: 0px 5px 5px 2px #E68A37;;
 }
 
 .card .card-footer {
@@ -21686,7 +21694,7 @@ fieldset:disabled .btn {
 .dark-version a:not(.dropdown-item):not(.choices__item):not(.leaflet-control-zoom-in):not(.leaflet-control-zoom-out):not(.btn):not(.nav-link):not(.fixed-plugin-button),
 .dark-version .table thead tr th,
 .dark-version .kanban-title-board {
-  color: #fff !important;
+  color: #fff;
 }
 
 .dark-version .input-group.input-group-dynamic .form-control,
