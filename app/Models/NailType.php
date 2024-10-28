@@ -2,27 +2,29 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class NailType extends Model
 {
     protected $table = 'nail_type';
     protected $fillable = [
         'type',
-        'size_title',
-        'price_title',
     ];
 
-    public function NailSize() : BelongsTo
+    public function Opps() : BelongsToMany
     {
-        return $this->belongsTo(NailSize::class, 'type_size');
+        return $this->belongsToMany(NailOpportunities::class, 'nails_groupment', 'type_id', 'opp_id');
     }
 
-    public function Price() :BelongsTo
+    public function Sizes() : BelongsToMany
     {
-        return $this->BelongsTo(Price::class);
+        return $this->belongsToMany(Sizes::class, 'nails_groupment', 'type_id', 'size_id');
+    }
+
+    public function Prices() : BelongsToMany
+    {
+        return $this->belongsToMany(Prices::class, 'nails_groupment', 'type_id', 'price_id');
     }
 }
 
