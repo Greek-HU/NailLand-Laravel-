@@ -19,7 +19,8 @@
             <li class="p-2">
                 <strong>Email: </strong>
                 <input type="email" name="newEmail" id="" 
-                value="{{ auth()->user()->email }}">            </li>
+                value="{{ auth()->user()->email }}">
+            </li>
             <li class="p-2 pb-3">
                 <strong>Tel.: </strong>
                 <input type="tel" name="newPhoneNum" id="" 
